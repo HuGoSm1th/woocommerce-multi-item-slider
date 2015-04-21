@@ -63,6 +63,7 @@ function wc_item_slider_register_settings(){
 function wc_item_slider_admin_page_callback(){?>
     <div class="wrap">
     <h2>Woocommerce Item Slider Settings</h2>
+    <h4>Use this shortcode:  [wc_item_slider]</h4>
     <form action="options.php" method="post">
 <?php
         settings_fields( 'wc_item_slider_settings' );
@@ -74,21 +75,62 @@ function wc_item_slider_admin_page_callback(){?>
                               <td>
                     <fieldset>
                         <label>
-<?php						
+ <table border="1">
+  <tr>
+    <td>
+<?php
 						$chosen_cat1 =(isset($options['cat1']) && $options['cat1'] != '') ? $options['cat1'] : '';
-						$chosen_cat2 =(isset($options['cat2']) && $options['cat2'] != '') ? $options['cat2'] : '';
-						$chosen_cat3 =(isset($options['cat3']) && $options['cat3'] != '') ? $options['cat3'] : '';
-						$chosen_cat4 =(isset($options['cat4']) && $options['cat4'] != '') ? $options['cat4'] : '';					
 						
 						$args1 = array('taxonomy'  => 'product_cat','name' => 'wc_item_slider_settings[cat1]','selected' => $chosen_cat1);//Category 1
+						echo     'Category 1' ; wp_dropdown_categories( $args1 );?>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<?php
+						$chosen_cat2 =(isset($options['cat2']) && $options['cat2'] != '') ? $options['cat2'] : '';
+						
 						$args2 = array('taxonomy'  => 'product_cat','name' => 'wc_item_slider_settings[cat2]','selected' => $chosen_cat2);//Category 2
+						echo     'Category 2' ; wp_dropdown_categories( $args2 );?>    
+    </td>
+  </tr>
+  <tr>
+    <td>
+<?php
+						$chosen_cat3 =(isset($options['cat3']) && $options['cat3'] != '') ? $options['cat3'] : '';
+						
 						$args3 = array('taxonomy'  => 'product_cat','name' => 'wc_item_slider_settings[cat3]','selected' => $chosen_cat3);//Category 3
-						$args4 = array('taxonomy'  => 'product_cat','name' => 'wc_item_slider_settings[cat4]','selected' => $chosen_cat4);//Category 4						
-		///Display Drowpdown boxes/////
-		echo     'Category 1' ; wp_dropdown_categories( $args1 );
-		echo     'Category 2' ; wp_dropdown_categories( $args2 );
-		echo     'Category 3' ; wp_dropdown_categories( $args3);
-		echo     'Category 4' ; wp_dropdown_categories( $args4);?>
+						echo     'Category 3' ; wp_dropdown_categories( $args3 );?>
+  </td>
+  </tr>
+  <tr>
+    <td>
+<?php
+						$chosen_cat4 =(isset($options['cat4']) && $options['cat4'] != '') ? $options['cat4'] : '';
+						
+						$args4 = array('taxonomy'  => 'product_cat','name' => 'wc_item_slider_settings[cat4]','selected' => $chosen_cat4);//Category 4
+						echo     'Category 4' ; wp_dropdown_categories( $args4 );?>
+  </td>
+  </tr>
+  <tr>
+    <td>
+<?php
+						$chosen_cat5 =(isset($options['cat5']) && $options['cat5'] != '') ? $options['cat5'] : '';
+						
+						$args5 = array('taxonomy'  => 'product_cat','name' => 'wc_item_slider_settings[cat5]','selected' => $chosen_cat5);//Category 5
+						echo     'Category 5' ; wp_dropdown_categories( $args5 );?>
+    </td>
+  </tr>
+  <tr>
+    <td>
+<?php
+						$chosen_cat6 =(isset($options['cat6']) && $options['cat6'] != '') ? $options['cat6'] : '';
+						
+						$args6 = array('taxonomy'  => 'product_cat','name' => 'wc_item_slider_settings[cat6]','selected' => $chosen_cat6);//Category 6
+						echo     'Category 6' ; wp_dropdown_categories( $args6 );?>    
+    </td>
+  </tr>
+</table>
                           
                              </label>
                     </fieldset>
@@ -114,6 +156,8 @@ $cate1=$wc_categories['cat1'];
 $cate2=$wc_categories['cat2'];
 $cate3=$wc_categories['cat3'];
 $cate4=$wc_categories['cat4'];
+$cate5=$wc_categories['cat5'];
+$cate6=$wc_categories['cat6'];
 
 //Getting Category Slugs
 
@@ -121,18 +165,22 @@ $cat1_terms = get_term($cate1, 'product_cat');
 $cat2_terms = get_term($cate2, 'product_cat'); 
 $cat3_terms = get_term($cate3, 'product_cat'); 
 $cat4_terms = get_term($cate4, 'product_cat'); 
+$cat5_terms = get_term($cate5, 'product_cat');
+$cat6_terms = get_term($cate6, 'product_cat');
 $theslug1 = $cat1_terms->slug; 
 $theslug2 = $cat2_terms->slug; 
 $theslug3 = $cat3_terms->slug; 
 $theslug4 = $cat4_terms->slug; 
+$theslug5 = $cat5_terms->slug;
+$theslug6 = $cat6_terms->slug;
 
 //Now assign   category 1 scroll from array:
 $args = array(
 'post_type' => 'product',
 'posts_per_page' => 4,
 'product_cat' => $theslug1,
-'orderby' => 'name',
-'order' => 'ASC',
+'orderby' => 'post_date',
+'order' => 'DESC',
 );
 		$loop = new WP_Query( $args );
 		if ( $loop->have_posts() ) {
@@ -151,8 +199,8 @@ $args = array(
 'post_type' => 'product',
 'posts_per_page' => 4,
 'product_cat' => $theslug2,
-'orderby' => 'name',
-'order' => 'ASC',
+'orderby' => 'post_date',
+'order' => 'DESC',
 );
 		$loop = new WP_Query( $args );
 		if ( $loop->have_posts() ) {
@@ -171,8 +219,8 @@ echo '<ul>';
 'post_type' => 'product',
 'posts_per_page' => 4,
 'product_cat' => $theslug3,
-'orderby' => 'name',
-'order' => 'ASC',
+'orderby' => 'post_date',
+'order' => 'DESC',
 );
 		$loop = new WP_Query( $args );
 		if ( $loop->have_posts() ) {
@@ -187,13 +235,34 @@ echo '<ul>';
 
 echo '</ul>	';
 echo '<ul>';
-//Now assign   category 4 scroll from array:	
-		$args = array(
+//Now assign   category 4 scroll from array:
+	$args = array(
 'post_type' => 'product',
 'posts_per_page' => 4,
 'product_cat' => $theslug4,
-'orderby' => 'name',
-'order' => 'ASC',
+'orderby' => 'post_date',
+'order' => 'DESC',
+);
+		$loop = new WP_Query( $args );
+		if ( $loop->have_posts() ) {
+			while ( $loop->have_posts() ) : $loop->the_post();
+				woocommerce_get_template_part( 'content', 'product' );
+			
+			endwhile;
+		} else {
+			echo __('No products found' );
+		}
+		wp_reset_postdata();
+
+echo '</ul>	';
+echo '<ul>';
+//Now assign   category 5 scroll from array:	
+		$args = array(
+'post_type' => 'product',
+'posts_per_page' => 4,
+'product_cat' => $theslug5,
+'orderby' => 'post_date',
+'order' => 'DESC',
 );
 		$loop = new WP_Query( $args );
 		if ( $loop->have_posts() ) {
@@ -205,13 +274,36 @@ echo '<ul>';
 			echo __('No products found' );
 		}
 		wp_reset_postdata();
-
+echo '</ul>	';
+echo '<ul>';
+//Now assign   category 6 scroll from array:	
+		$args = array(
+'post_type' => 'product',
+'posts_per_page' => 4,
+'product_cat' => $theslug6,
+'orderby' => 'post_date',
+'order' => 'DESC',
+);
+		$loop = new WP_Query( $args );
+		if ( $loop->have_posts() ) {
+			while ( $loop->have_posts() ) : $loop->the_post();
+				woocommerce_get_template_part( 'content', 'product' );
+				
+			endwhile;
+		} else {
+			echo __('No products found' );
+		}
+		wp_reset_postdata();		
+		
 echo '</ul>	';
 echo '<nav>
+				
 <a href="#">' . $theslug1 . '</a>
 <a href="#">' . $theslug2 . '</a>
 <a href="#">' . $theslug3 . '</a>
 <a href="#">' . $theslug4 . '</a>
+<a href="#">' . $theslug5 . '</a>
+<a href="#">' . $theslug6 . '</a>
 </nav></div>';  
 }
 add_shortcode('wc_item_slider','wc_item_slider');
